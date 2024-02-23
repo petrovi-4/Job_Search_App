@@ -177,7 +177,8 @@ class Vacancy:
         return vacancies
 
     @staticmethod
-    def print_formatted_vacancy_list(list_vacancies, number_vacancies=None) -> None:
+    def print_formatted_vacancies_list(list_vacancies, number_vacancies=None) \
+            -> None:
         """
         Печатает данные о вакансиях для пользователя
         :param list_vacancies: Список вакансий
