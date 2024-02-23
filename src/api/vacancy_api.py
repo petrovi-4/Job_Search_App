@@ -6,7 +6,7 @@ class VacancyAPI(ABC):
     Абстрактный класс, для работы с API сайтов с вакансиями.
     """
 
-    def __init__(self, url, count_vacancies=100):
+    def __init__(self, url, count_vacancies=50):
         self._url = url
         self._count_vacancies = count_vacancies
 

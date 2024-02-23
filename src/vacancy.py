@@ -90,14 +90,16 @@ class Vacancy:
             title = hh_vacancy['name']
             url = hh_vacancy['alternate_url']
             if hh_vacancy['salary']:
-                salary = None
+                salary = hh_vacancy['salary']['from']
                 salary_currency = hh_vacancy['salary']['currency']
             else:
                 salary = None
                 salary_currency = None
             date = datetime.datetime.strptime(
-                hh_vacancy['published_at'], '%Y-%m-%dT%H:%M:').strftime(
-                '%d.%m.%Y')
+                hh_vacancy['published_at'], '%Y-%m-%dT%H:%M:%S+%f'
+                ).strftime(
+                "%d.%m.%Y"
+            )
             city = hh_vacancy['area']['name']
             cls(title, url, salary, salary_currency, date, city)
 
@@ -177,8 +179,7 @@ class Vacancy:
         return vacancies
 
     @staticmethod
-    def print_formatted_vacancies_list(list_vacancies, number_vacancies=None) \
-            -> None:
+    def print_formatted_vacancies_list(list_vacancies, number_vacancies=None) -> None:
         """
         Печатает данные о вакансиях для пользователя
         :param list_vacancies: Список вакансий
@@ -189,19 +190,21 @@ class Vacancy:
             print('В файле отсутствуют данные о вакансиях')
         else:
             if number_vacancies is None or number_vacancies > len(
-                    list_vacancies):
+                    list_vacancies
+                    ):
                 number_vacancies = len(list_vacancies)
             for index in range(number_vacancies):
                 if list_vacancies[index]['_Vacancy__salary']:
                     print(
-                        f"Вакансия: {list_vacancies[index]['_Vacancy__title']}, зарплата до "
+                        f"Профессия: {list_vacancies[index]['_Vacancy__title']}, зарплата до "
                         f"{list_vacancies[index]['_Vacancy__salary']}"
                         f" {list_vacancies[index]['_Vacancy__salary_currency']}, дата публикации: "
                         f"{list_vacancies[index]['_Vacancy__date']}, город: {list_vacancies[index]['_Vacancy__city']}, "
-                        f"url: {list_vacancies[index]['_Vacancy__url']}")
-
+                        f"url: {list_vacancies[index]['_Vacancy__url']}"
+                    )
                 else:
                     print(
-                        f"Вакансия: {list_vacancies[index]['_Vacancy__title']}, зарплата не указана, дата публикации: "
+                        f"Профессия: {list_vacancies[index]['_Vacancy__title']}, зарплата не указана, дата публикации: "
                         f"{list_vacancies[index]['_Vacancy__date']}, город: {list_vacancies[index]['_Vacancy__city']}, "
-                        f"url: {list_vacancies[index]['_Vacancy__url']}")
+                        f"url: {list_vacancies[index]['_Vacancy__url']}"
+                    )

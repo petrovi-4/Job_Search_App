@@ -29,7 +29,7 @@ def filters_and_display_vacancies() -> None:
     :return: None
     """
     param_number = input(
-        'Выберите параметр фильтрации вакансий: \n1 -город '
+        'Выберите параметр фильтрации вакансий: \n1 - город '
         '\n2 - зарплата\n'
         )
     if param_number == '1':
@@ -38,7 +38,7 @@ def filters_and_display_vacancies() -> None:
         if vacancies_city:
             Vacancy.print_formatted_vacancies_list(vacancies_city)
             user_input = input(
-                'Сохранить выбранные вакансии в файл\1 - '
+                'Сохранить выбранные вакансии в файл\n1 - '
                 'да\nEnter - нет\n'
                 )
             if user_input == '1':

@@ -24,3 +24,8 @@ class HHVacancyAPI(VacancyAPI):
         response_json = response.json()
 
         return response_json.get('items', [])
+
+
+if __name__ == '__main__':
+    find = HHVacancyAPI
+    print(find.get_vacancies('python'))
