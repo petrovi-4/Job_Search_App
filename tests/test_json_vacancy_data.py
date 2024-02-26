@@ -1,5 +1,5 @@
 import os
-
+import json
 from src.json_vacancy_data import JSONVacancyData
 
 
@@ -11,7 +11,7 @@ def test_add_vacancies(json_vacancy_data):
             "Санкт-Петербург"}
     ]
 
-    # Добавляем вакансии в JSON-файл
+    # Добавляем вакансии в JSON-файл.
     json_vacancy_data.add_vacancies(vacancies)
 
     # Читаем данные из файла и проверяем их соответствие добавленным вакансиям.
@@ -19,27 +19,28 @@ def test_add_vacancies(json_vacancy_data):
 
 
 def test_remove_data_from_file(json_vacancy_data):
-    # Определяем некоторые образцовые вакансии
+    # Список словарей вакансий.
     vacancies = [
-        {"title": "Программист", "salary": 100000, "city": "Москва"},
-        {"title": "Аналитик данных", "salary": 120000,
-         "city": "Санкт-Петербург"}
+        {"title": "Программист", "salary": 100_000, "city": "Москва"},
+        {"title": "Аналитик данных", "salary": 120_000, "city":
+            "Санкт-Петербург"}
     ]
-
-    # Добавляем вакансии в JSON-файл
     json_vacancy_data.add_vacancies(vacancies)
 
     # Удаляем данные из файла
     json_vacancy_data.remove_data_from_file()
 
-    # Проверяем, пуст ли файл после удаления
+    # Проверяем пуст ли файл.
     assert os.stat(json_vacancy_data.filename).st_size == 0
 
 
 def test_get_data_from_file_empty(tmpdir):
-    # Создаем пустой JSON-файл
-    temp_file = tmpdir.join("empty_vacancies.json")
-    temp_file.write("[]")
+    # Создаём пустой JSON-файл
+    temp_file = tmpdir.join('empty_vacansies.json')
+    temp_file.write('[]')
 
     # Инициализируем JSONVacancyData пустым файлом
     json_vacancy_data = JSONVacancyData(temp_file)
+
+    # Проверяем, что список вакансий из пустого файла пустой
+    assert json_vacancy_data.get_data_from_file() == []
