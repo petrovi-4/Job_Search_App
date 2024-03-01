@@ -13,19 +13,17 @@ class HHVacancyAPI(VacancyAPI):
         super().__init__(url)
 
     def get_vacancies(self, vacancy_title) -> list:
-        """
-        Метод получает с сайта hh.ru данные о вакансиях.
-        :param vacancy_title: Название вакансии для поиска.
-        :return: Список вакансий.
-        """
         params = {'text': vacancy_title, 'per_page': self._count_vacancies}
-
-        response = requests.get(self.url, params=params)
-        response_json = response.json()
-
-        return response_json.get('items', [])
+        try:
+            response = requests.get(self.url, params=params)
+            response.raise_for_status()
+            response_json = response.json()
+            return response_json.get('items', [])
+        except requests.exceptions.RequestException as error:
+            print(f'Ошибка получения данных: {error}')
 
 
 if __name__ == '__main__':
-    find = HHVacancyAPI
-    print(find.get_vacancies('python'))
+    find = HHVacancyAPI()
+    vacancies = find.get_vacancies('python')
+    print(vacancies)
